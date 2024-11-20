@@ -6,6 +6,7 @@ import Navbar from './components/Navbar.jsx'
 import Sidebar from './components/Sidebar.jsx'
 import AddItem from './components/AddItem.jsx'
 import Item from './components/Item.jsx'
+import ItemList from './components/ItemList.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,13 +18,14 @@ function App() {
       <div className='ml-80 py-4 mr-10'>
         <AddItem />
         <div className='grid grid-cols-3 gap-4'>
+          {/* <Item />
           <Item />
           <Item />
           <Item />
           <Item />
           <Item />
-          <Item />
-          <Item />
+          <Item /> */}
+          <ItemList />
         </div>
       </div>
     </>
