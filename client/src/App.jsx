@@ -14,7 +14,7 @@ function App() {
     <>
       <Navbar />
       <Sidebar />
-      <div className='ml-80 py-4'>
+      <div className='ml-80 py-4 mr-10'>
         <AddItem />
         <div className='grid grid-cols-3 gap-4'>
           <Item />

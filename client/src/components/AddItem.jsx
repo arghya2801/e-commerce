@@ -25,7 +25,6 @@ const AddItem = () => {
                     <p className='px-6'>
                         <button type="submit" className='bg-violet-700 rounded-md text-white h-10 px-4'>Add Item</button>
                     </p>
-
                 </form>
 
             </div>

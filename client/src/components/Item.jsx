@@ -3,7 +3,7 @@ import React from 'react'
 const Item = () => {
     return (
         <>
-            <div className='border border-solid-2 p-6 bg-white'>
+            <div className='border border-solid-2 p-6 bg-white flex flex-col items-center'>
                 <h3 className='text-2xl font-semibold'>Item Name </h3>
                 <p>Item Price: Rs 100</p>
                 <p>Item Category: Category 1</p>
