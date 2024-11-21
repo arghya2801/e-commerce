@@ -36,9 +36,9 @@ const AddItem = () => {
 
     return (
         <>
-            <div className='border border-solid-2 w-fit p-5 bg-[#ACACDE] rounded-lg my-3 mx-48'>
+            <div className='border border-solid-2 w-fit p-5 bg-[#ACACDE] rounded-lg my-3 mx-32'>
                 <div className='text-2xl font-semibold'>Add Item to main Database</div>
-                <form action="/form-page" method="post" className='flex gap-1 ' onSubmit={(e) => { e.preventDefault(); saveItemData(); }}>
+                <form action="/" method="post" className='flex gap-1' onSubmit={(e) => { e.preventDefault(); saveItemData(); window.location.reload(); }}>
                     <p className='flex flex-col'>
                         <label htmlFor="name">Name of Item:</label>
                         <input type="text" id="name" name="user_name" className='border border-solid-2' />
@@ -62,8 +62,7 @@ const AddItem = () => {
                     <p className='px-6'>
                         <button
                             type="submit"
-                            className='bg-violet-700 rounded-md text-white h-10 px-4'
-                            onClick={saveItemData}>
+                            className='bg-violet-700 rounded-md text-white h-10 px-4'>
                             Add Item</button>
                     </p>
                 </form>
