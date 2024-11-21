@@ -38,7 +38,7 @@ const AddItem = () => {
         <>
             <div className='border border-solid-2 w-fit p-5 bg-[#ACACDE] rounded-lg my-3 mx-32'>
                 <div className='text-2xl font-semibold'>Add Item to main Database</div>
-                <form action="/" method="post" className='flex gap-1' onSubmit={(e) => { e.preventDefault(); saveItemData(); window.location.reload(); }}>
+                <form action="/" method="post" className='flex gap-1' onSubmit={(e) => { e.preventDefault(); saveItemData();; }}>
                     <p className='flex flex-col'>
                         <label htmlFor="name">Name of Item:</label>
                         <input type="text" id="name" name="user_name" className='border border-solid-2' />
