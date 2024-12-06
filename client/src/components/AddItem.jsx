@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 const AddItem = () => {
 
-    const saveItemData = () => {
-        const existingData = localStorage.getItem('itemData');
-        const parsedData = existingData ? JSON.parse(existingData) : [];
-        if (!Array.isArray(parsedData)) {
-            console.error('Stored itemData is not an array');
-            return;
-        }
+    const [itemData, setItemData] = useState([]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('http://localhost:3000/products');
+            const data = await response.json();
+            setItemData(data.data);
+        };
+        fetchData();
+    }, []);
+
+    const saveItemData = () => {
+        const existingData = itemData;
         const name = document.getElementById('name').value;
         const category = document.getElementById('category').value;
         const price = document.getElementById('price').value;
@@ -17,7 +22,7 @@ const AddItem = () => {
         const quantity = document.getElementById('quantity').value;
 
         // Check if the item already exists
-        const itemExists = parsedData.some(item =>
+        const itemExists = existingData.some(item =>
             item.name === name &&
             item.category === category &&
             item.price === price &&
@@ -26,11 +31,20 @@ const AddItem = () => {
         );
 
         if (!itemExists) {
-            const newData = [...parsedData, { name, category, price, description, quantity }];
-            localStorage.setItem('itemData', JSON.stringify(newData));
-            console.log('Item data saved to local storage');
+            const newData = [...existingData, { name, category, price, description, quantity }];
+            fetch('http://localhost:3000/products', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: newData }),
+            })
+            .then(response => response.json())
+            .then(data => setItemData(data.data))
+            .catch(error => console.error(error));
+            console.log('Item data saved to server');
         } else {
-            console.log('Item already exists in local storage');
+            console.log('Item already exists in server');
         }
     }
 

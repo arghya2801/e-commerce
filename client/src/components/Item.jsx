@@ -1,10 +1,17 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Item = ({ name, price, category, description, quantity }) => {
-  const [itemData, setItemData] = useState(
-    JSON.parse(localStorage.getItem('itemData')) || []
-  );
+  const [itemData, setItemData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get('http://localhost:3000/products');
+      setItemData(response.data);
+    };
+    fetchData();
+  }, []);
 
   const addItemToCart = () => {
     const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -20,7 +27,7 @@ const Item = ({ name, price, category, description, quantity }) => {
   
   const deleteItem = (id) => {
     const filteredItems = itemData.filter((item) => item.name !== id);
-    localStorage.setItem('itemData', JSON.stringify(filteredItems));
+    axios.put('http://localhost:3000/products', filteredItems);
     setItemData(filteredItems);
     console.log('Item deleted from main database');
   };

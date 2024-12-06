@@ -1,10 +1,17 @@
 import React from 'react'
+import { useState } from 'react';
 import Item from './Item.jsx'
 
 const ItemList = () => {
-    const itemData = JSON.parse(localStorage.getItem('itemData')) || [];
-    
-    console.log(itemData)
+    const [itemData, setItemData] = React.useState([]);
+
+    React.useEffect(() => {
+        fetch('/products')
+            .then(response => response.json())
+            .then(data => setItemData(data.data))
+            .catch(error => console.log(error));
+    }, []);
+
     return (
         <>
         {itemData.map((item, i) => (
