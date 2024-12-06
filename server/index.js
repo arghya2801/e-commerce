@@ -13,13 +13,13 @@ app.get("/", (request, response) => {
     });
 })
 
-
-app.get("/products", postgres.getProducts);
-app.post("/products", postgres.addProduct);
-app.post("/products", postgres.deleteProduct);
-app.get("/cart", postgres.getCart);
-app.post("/cart", postgres.addToCart);
-app.post("/cart", postgres.deleteFromCart);
+// console.log(postgres.getProducts);
+app.get("http://localhost:3000/products", postgres.getProducts);
+app.post("http://localhost:3000/products", postgres.addProduct);
+app.post("http://localhost:3000/products", postgres.deleteProduct);
+app.get("http://localhost:3000/cart", postgres.getCartProducts);
+app.post("http://localhost:3000/cart", postgres.addToCart);
+app.post("http://localhost:3000/cart", postgres.deleteFromCart);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
