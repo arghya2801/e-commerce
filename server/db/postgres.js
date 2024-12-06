@@ -96,6 +96,35 @@ const deleteProduct = (request, response) => {
 
 
 // Cart Page
+const getCartProducts = (request, response) => {
+    try {
+        const query = {
+            text: `SELECT c.cart_id, p.product_id, p.name, p.price, p.category, p.description, c.quantity
+                    FROM cart c
+                    LEFT JOIN products p ON c.product_id = p.product_id`,
+        };
+
+        pool.query(query, (error, results) => {
+            if (error) {
+                throw error;
+            }
+
+            if (results.rowCount === 0) {
+                response.status(404).json({ message: 'Cart is empty' });
+            } else {
+                response.status(200).json({
+                    code: 200,
+                    message: "Cart products",
+                    data: results.rows
+                });
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 const addToCart = (request, response) => {
     try {
         const { product_id, quantity } = request.body;
@@ -159,6 +188,7 @@ export default {
     deleteProduct,
 
     // Cart Page
+    getCartProducts,
     addToCart,
     deleteFromCart
 }

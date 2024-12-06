@@ -17,6 +17,7 @@ app.get("/", (request, response) => {
 app.get("/products", postgres.getProducts);
 app.post("/products", postgres.addProduct);
 app.post("/products", postgres.deleteProduct);
+app.get("/cart", postgres.getCart);
 app.post("/cart", postgres.addToCart);
 app.post("/cart", postgres.deleteFromCart);
 
