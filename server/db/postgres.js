@@ -14,6 +14,7 @@ const pool = new Pool({
     database: 'ecommerce',
 });
 
+// Products Page
 const getProducts = (request, response) => {
     try {
         pool.query('SELECT * FROM products', (error, results) => {
@@ -64,9 +65,102 @@ const addProduct = (request, response) => {
     }
 }
 
+const deleteProduct = (request, response) => {
+    try {
+        const { product_id } = request.params;
+        const deleteQuery = {
+            text: `DELETE FROM products WHERE product_id = $1 RETURNING *`,
+            values: [product_id]
+        };
+
+        pool.query(deleteQuery, (error, results) => {
+            if (error) {
+                throw error;
+            }
+
+            if (results.rowCount === 0) {
+                response.status(404).json({ message: 'Product not found' });
+            } else {
+                response.status(200).json({
+                    code: 200,
+                    message: "Product deleted",
+                    data: results.rows[0]
+                });
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+
+// Cart Page
+const addToCart = (request, response) => {
+    try {
+        const { product_id, quantity } = request.body;
+
+        // Add the product to cart in the database
+        const query = {
+            text: `INSERT INTO cart (product_id, quantity) VALUES ($1, $2) RETURNING *`,
+            values: [product_id, quantity],
+        };
+
+        pool.query(query, (error, results) => {
+            if (error) {
+                throw error;
+            }
+
+            response.status(201).json({
+                code: 201,
+                message: "Product added to cart",
+                data: results.rows[0],
+            });
+        });
+    } catch (error) {
+        console.error(error);
+        response.status(400).json({ message: 'Bad Request' });
+    }
+};
+
+const deleteFromCart = (request, response) => {
+    try {
+        const { cart_id } = request.params;
+        const deleteQuery = {
+            text: `DELETE FROM cart WHERE cart_id = $1 RETURNING *`,
+            values: [cart_id]
+        };
+
+        pool.query(deleteQuery, (error, results) => {
+            if (error) {
+                throw error;
+            }
+
+            if (results.rowCount === 0) {
+                response.status(404).json({ message: 'Cart item not found' });
+            } else {
+                response.status(200).json({
+                    code: 200,
+                    message: "Item deleted from cart",
+                    data: results.rows[0]
+                });
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 export default {
+    // Product Page
     getProducts,
     addProduct,
+    deleteProduct,
+
+    // Cart Page
+    addToCart,
+    deleteFromCart
 }
 
 
