@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
+import { useUserStore } from "../stores/useUserStore.js";
 
 const Navbar = () => {
-  const user = false;
-  const isAdmin = true;
+  // const user = false;
+  // const isAdmin = true;
+  
+  const { user, logout } = useUserStore();
+  const isAdmin = user?.role === "admin";
+
   return (
     <header className="fixed top-0 left-0 w-full bg-[#78009c] bg-opacity-90 backdrop-blur-md shadow-lg z-40">
       <div className="container mx-auto flex items-center justify-between h-16">
@@ -35,7 +40,7 @@ const Navbar = () => {
           )}
 
           {user ? (
-            <button className="text-white hover:text-[#78009c]">
+            <button className="text-white hover:text-[#78009c]" onClick={logout}>
               <LogOut />
               <span className="hidden sm:inline">Logout</span>
             </button>
