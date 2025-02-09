@@ -1,10 +1,15 @@
-import React from 'react'
+import React from "react";
+
+import Sidebar from "../components/Sidebar.jsx";
+import Items from "../components/Items.jsx";
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
-    
-  )
-}
+    <>
+      <Sidebar />
+      <Items />
+    </>
+  );
+};
 
-export default HomePage
+export default HomePage;

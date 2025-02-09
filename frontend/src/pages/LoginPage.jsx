@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useUserStore } from "../stores/useUserStore.js";
+import axios from "axios";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -8,11 +10,24 @@ const LoginPage = () => {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const { login, loading } = useUserStore();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
 
-    setFormData({ name: "", email: "", password: "" });
+    const { email, password } = formData;
+    // login(email, password);
+
+    // setFormData({ email: "", password: "" });
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/login",
+        { email, password },
+        { withCredentials: true });
+      console.log("Login successful:", response.data);
+    } catch (error) {
+      console.error("Login failed:", error.response?.data || error.message);
+    }
   };
 
   return (

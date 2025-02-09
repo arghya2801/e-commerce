@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useUserStore } from "../stores/useUserStore.js";
 
 const SignUpPage = () => {
-  // const loading = true;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,9 +10,12 @@ const SignUpPage = () => {
     confirmPassword: "",
   });
 
+  const { signup, loading } = useUserStore();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    signup(formData);
 
     setFormData({ name: "", email: "", password: "", confirmPassword: "" });
   };
@@ -110,8 +113,11 @@ const SignUpPage = () => {
           </form>
 
           <p className="mt-4 text-center text-sm text-gray-600">
-            Already have an account? 
-            <Link to="/login" className="font-medium px-2 text-[#78009c] hover:text-[#6c5ce7]">
+            Already have an account?
+            <Link
+              to="/login"
+              className="font-medium px-2 text-[#78009c] hover:text-[#6c5ce7]"
+            >
               Login here
             </Link>
           </p>
