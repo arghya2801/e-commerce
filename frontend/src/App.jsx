@@ -5,6 +5,8 @@ import { Toaster } from "react-hot-toast";
 import HomePage from "./pages/HomePage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import AdminPage from "./pages/AdminPage.jsx";
+import CartPage from "./pages/CartPage.jsx";
 
 import Navbar from "./components/Navbar.jsx";
 import { useUserStore } from "./stores/useUserStore.js";
@@ -23,8 +25,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={!user ? <SignUpPage /> : <Navigate to="/" />} />
-          <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/" />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path='/admin' element={<AdminPage />} />
+          <Route path='/cart' element={<CartPage />} />
         </Routes>
       </div>
       <Toaster />
