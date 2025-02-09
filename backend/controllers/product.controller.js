@@ -36,21 +36,14 @@ export const getFeaturedProducts = async (req, res) => {
 
 export const createProduct = async (req, res) => {
 	try {
-		// const { name, description, price, image, category } = req.body;
-		const { name, description, price, category } = req.body;
-
-		// let cloudinaryResponse = null;
-
-		// if (image) {
-		// 	cloudinaryResponse = await cloudinary.uploader.upload(image, { folder: "products" });
-		// }
+		const { name, description, price, category, stock } = req.body;
 
 		const product = await Product.create({
 			name,
 			description,
 			price,
-			// image: cloudinaryResponse?.secure_url ? cloudinaryResponse.secure_url : "",
 			category,
+			stock,
 		});
 
 		res.status(201).json(product);
@@ -67,16 +60,6 @@ export const deleteProduct = async (req, res) => {
 		if (!product) {
 			return res.status(404).json({ message: "Product not found" });
 		}
-
-		// if (product.image) {
-		// 	const publicId = product.image.split("/").pop().split(".")[0];
-		// 	try {
-		// 		await cloudinary.uploader.destroy(`products/${publicId}`);
-		// 		console.log("deleted image from cloduinary");
-		// 	} catch (error) {
-		// 		console.log("error deleting image from cloduinary", error);
-		// 	}
-		// }
 
 		await Product.findByIdAndDelete(req.params.id);
 
@@ -98,8 +81,9 @@ export const getRecommendedProducts = async (req, res) => {
 					_id: 1,
 					name: 1,
 					description: 1,
-					// image: 1,
 					price: 1,
+					category: 1,
+					stock: 1,
 				},
 			},
 		]);

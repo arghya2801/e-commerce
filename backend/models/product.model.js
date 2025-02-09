@@ -15,13 +15,13 @@ const productSchema = new mongoose.Schema(
 			min: 0,
 			required: true,
 		},
-		// image: {
-		// 	type: String,
-		// 	required: [true, "Image is required"],
-		// },
 		category: {
 			type: String,
 			required: true,
+		},
+		stock: {
+			type: Number,
+			default: 0,
 		},
 		isFeatured: {
 			type: Boolean,
